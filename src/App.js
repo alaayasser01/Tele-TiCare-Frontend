@@ -5,7 +5,9 @@ import Report from "./pages/Report";
 import Profile from "./pages/Profile";
 import NoPage from "./pages/NoPage";
 import SignUp from "./pages/SignUp";
-import VideoRecorder from "./pages/VideoRecorder";
+import WebcamVideo from "./pages/WebcamVideo";
+import TestFirst from "./pages/TestFirst";
+import Movie from "./pages/Movie";
 
 function App() {
   return (
@@ -13,11 +15,12 @@ function App() {
     <Routes>
         <Route path="/" element={<Layout/>} />
         <Route path="/home" element={<Home/>} />
-        <Route path="/videoRecorder" element={<VideoRecorder/>} />
+        <Route path="/videoRecorder" element={<WebcamVideo/>} />
         <Route path="/signup" element={<SignUp/>} />
         <Route path="/profile" element={<Profile/>} />
         <Route path="/report" element={<Report />} />
-        <Route path="/movie/:id" element={<VideoRecorder />} />
+        <Route path="/movie/:id" element={<Movie/>} />
+        <Route path="/testfirst/:id" element={<TestFirst />} />
         <Route path="*" element={<NoPage />} />
         
     </Routes>

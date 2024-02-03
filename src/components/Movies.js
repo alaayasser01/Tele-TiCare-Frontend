@@ -23,13 +23,14 @@ export default function Movies() {
         {movies.map((movie, id) => (
           <div className="col-md-3" key={id}>
             <div className="card mb-4">
-              {/* <img className="card-img-top"  src={movie.poster} alt={`${movie.title} poster`} /> */}
               <div className="card-body">
-                <h5 className="card-title">{movie.title}</h5>
+                <Link  className="card-title" to={{ pathname: `/testfirst/${movie.id}`, state: { movie } }}>
+                <h5 >{movie.title}</h5>
+                </Link>
                 <p className="card-text">
                   This is a {movie.genre} movie, the rating is {movie.rating}, {movie.year}
                 </p>
-                <Link to={`/movie/${movie.id}`}>Link</Link>
+              
               </div>
             </div>
           </div>

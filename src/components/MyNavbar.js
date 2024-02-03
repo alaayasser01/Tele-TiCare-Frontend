@@ -16,7 +16,7 @@ const MyNavbar = () => {
         </Link>
       </div>
       <div>
-        <Link to="/" style={{ color: 'black', textDecoration: 'none' }}>
+        <Link to="/signup" style={{ color: 'black', textDecoration: 'none' }}>
           Sign Out
         </Link>
       </div>

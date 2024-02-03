@@ -1,21 +1,15 @@
 import React from 'react'
-import MyHeader from '../components/MyHeader'
-import MyNavbar from '../components/MyNavbar'
 import Movies from '../components/Movies'
-import Webcam from 'react-webcam'
-import WebcamVideo from './WebcamVideo'
+import Layout from './Layout'
 
 export default function Home() {
   return (
     <>
-    {/* <MyHeader />
-    <MyNavbar/>
+    <Layout/>
     <div className='container'>
     <Movies/>
     
-    </div> */}
-    {/* <Webcam/> */}
-    <WebcamVideo/>
+    </div>
 
     
     </>

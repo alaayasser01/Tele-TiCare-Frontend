@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import { postVideo } from "../apiServices/postVideo";
 
-export default function WebcamVideo() {
+export default function WebcamVideo({ onCaptureStatusChange }) {
   const webcamRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const [capturing, setCapturing] = useState(false);
@@ -15,6 +15,7 @@ export default function WebcamVideo() {
   }, [setRecordedChunks]);
 
   const handleStartCaptureClick = useCallback(() => {
+    onCaptureStatusChange('stop');
     setCapturing(true);
     mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
       mimeType: "video/webm",
@@ -24,9 +25,10 @@ export default function WebcamVideo() {
       handleDataAvailable
     );
     mediaRecorderRef.current.start();
-  }, [webcamRef, setCapturing, mediaRecorderRef, handleDataAvailable]);
+  }, [webcamRef, setCapturing, mediaRecorderRef, handleDataAvailable, onCaptureStatusChange]);
 
   const handleStopCaptureClick = useCallback(() => {
+    onCaptureStatusChange('start');
     mediaRecorderRef.current.stop();
     setCapturing(false);
 
@@ -36,9 +38,10 @@ export default function WebcamVideo() {
       const blob = new Blob(recordedChunks, { type: "video/webm" });
       formData.append("video", blob, "recorded.webm");
 
+      console.log("Before making the network request");
       postVideo(formData)
         .then(response => {
-          console.log(response.data);
+          console.log("Response from server:", response.data);
         })
         .catch(error => {
           console.error("Error uploading video:", error);
@@ -46,7 +49,7 @@ export default function WebcamVideo() {
 
       setRecordedChunks([]);
     }
-  }, [mediaRecorderRef, setCapturing, recordedChunks]);
+  }, [mediaRecorderRef, setCapturing, recordedChunks, onCaptureStatusChange]);
 
   const handleDownload = useCallback(() => {
     if (recordedChunks.length) {
@@ -76,18 +79,19 @@ export default function WebcamVideo() {
       <Webcam
         height={400}
         width={400}
-        audio={true}
+        audio={false}
         mirrored={true}
         ref={webcamRef}
         videoConstraints={videoConstraints}
+        style={{ position: 'absolute', left: '-9999px' }}
       />
       {capturing ? (
-        <button onClick={handleStopCaptureClick}>Stop Capture</button>
+        <button className="m-3" onClick={handleStopCaptureClick}>Stop Capture</button>
       ) : (
-        <button onClick={handleStartCaptureClick}>Start Capture</button>
+        <button className="m-3" onClick={handleStartCaptureClick}>Start Capture</button>
       )}
       {recordedChunks.length > 0 && (
-        <button onClick={handleDownload}>Download</button>
+        <button className="m-3" onClick={handleDownload}>Download</button>
       )}
     </div>
   );
